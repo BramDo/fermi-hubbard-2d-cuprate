@@ -51,6 +51,19 @@ known WSL Qiskit environment:
 /home/bram/.venvs/qiskit/bin/python
 ```
 
+## GitHub Pages
+
+The static project site lives in `docs/` and is designed for GitHub Pages:
+
+```text
+https://bramdo.github.io/fermi-hubbard-2d-cuprate/
+```
+
+It summarizes the claim boundary, run paths, curated result locations, and the
+canonical Edukaizen 2D cuprate article series. The workflow in
+`.github/workflows/pages.yml` publishes `docs/` on pushes to `main` once GitHub
+Pages is configured to use GitHub Actions.
+
 ## Hardware Safety
 
 Scripts named `submit_*` can submit IBM Runtime or Fire Opal jobs. Other scripts
