@@ -1,3 +1,5 @@
+> **Circuit clarification, 19 October 2026.** This is the historical 2D snapshot, not the later full-fermion Nighthawk experiment. The old one-step `number_preserving_t_only` route omits diagonal hopping and nonlocal fermionic parity strings; onsite gates have no ideal U-dependent measurement effect in that one-step run. See [the circuit/result register](docs/FERMIONIC_ROUTES.md) and [the Nighthawk series](https://edukaizen.nl/2d-local-quantum-advantage-en/). The [full-fermion code repository](https://github.com/BramDo/fermi-hubbard-2d-nighthawk) is private. No matched-accuracy comparison to Google is established.
+
 # 2D Cuprate Fermi-Hubbard Validation
 
 This repository contains the separate 2D cuprate-oriented Fermi-Hubbard route
