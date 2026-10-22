@@ -27,7 +27,9 @@ from cuprate_2d_ibm_hardware_runner import (
     select_hardware_backend,
     transpile_circuits,
 )
-from cuprate_2d_qiskit_circuit import SUPPORTED_CIRCUIT_FAMILIES, build_circuit, load_config
+from cuprate_2d_qiskit_circuit import (
+    SUPPORTED_CIRCUIT_FAMILIES, build_circuit, ensure_output_circuit_family, load_config,
+)
 from ibm_staged_fermi_hubbard_runner import build_runtime_service, summarize_circuit
 
 
@@ -299,6 +301,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    ensure_output_circuit_family(args.outdir, args.circuit_family)
     args.outdir.mkdir(parents=True, exist_ok=True)
     cfg = replace(load_config(args.config), steps=int(args.steps))
     service = build_runtime_service()

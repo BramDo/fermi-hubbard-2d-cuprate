@@ -3,6 +3,12 @@
 Reviewed 19 October 2026. Geometry, circuit family and processor are separate
 attributes. Running a circuit on Nighthawk does not make its hopping fermionic.
 
+**Update, 22 October 2026:** `number_preserving_t_only` is now retired from
+active construction and new jobs in this repository. Historical results,
+their identities and retrieval remain available. This does not migrate the
+historical snapshot to the newer Nighthawk code. See
+[T_ONLY_RETIREMENT.md](T_ONLY_RETIREMENT.md).
+
 ## Which Project Is Which?
 
 | Route | Circuit/model | Hardware/results | Canonical location |

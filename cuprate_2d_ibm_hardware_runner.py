@@ -42,7 +42,10 @@ from cuprate_2d_hubbard_pipeline import (
     mode_qubit,
     validate_config,
 )
-from cuprate_2d_qiskit_circuit import SUPPORTED_CIRCUIT_FAMILIES, build_circuit, load_config
+from cuprate_2d_qiskit_circuit import (
+    READABLE_CIRCUIT_FAMILIES, SUPPORTED_CIRCUIT_FAMILIES, build_circuit,
+    ensure_output_circuit_family, load_config, validate_circuit_family_action,
+)
 from ibm_staged_fermi_hubbard_runner import (
     backend_name,
     backend_operational,
@@ -626,7 +629,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--backend", default=None)
     parser.add_argument("--steps", type=int, default=1, help="Hardware smoke-test Trotter steps.")
     parser.add_argument("--shots", type=int, default=512)
-    parser.add_argument("--circuit-family", choices=SUPPORTED_CIRCUIT_FAMILIES, default="explicit_jw")
+    parser.add_argument("--circuit-family", choices=READABLE_CIRCUIT_FAMILIES, default="explicit_jw",
+                        help="Retired t-only is accepted only with --retrieve; never for a new run.")
     parser.add_argument("--optimization-level", type=int, default=1)
     parser.add_argument("--seed-transpiler", type=int, default=72)
     parser.add_argument("--initial-layout", type=Path, default=None, help="JSON layout from cuprate_2d_layout_scout.py.")
@@ -637,11 +641,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--retrieve", action="store_true")
     parser.add_argument("--wait-seconds", type=int, default=900)
     parser.add_argument("--poll-interval", type=int, default=30)
-    return parser.parse_args()
+    args = parser.parse_args()
+    try:
+        validate_circuit_family_action(args.circuit_family, retrieve=args.retrieve, submit=args.submit)
+    except ValueError as error:
+        parser.error(str(error))
+    return args
 
 
 def main() -> None:
     args = parse_args()
+    validate_circuit_family_action(args.circuit_family, retrieve=args.retrieve, submit=args.submit)
+    if not args.retrieve:
+        ensure_output_circuit_family(args.outdir, args.circuit_family)
     args.outdir.mkdir(parents=True, exist_ok=True)
     cfg = load_config(args.config)
     cfg = replace(cfg, steps=int(args.steps))

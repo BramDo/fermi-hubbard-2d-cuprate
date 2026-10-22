@@ -41,9 +41,34 @@ CIRCUIT_FAMILY_NUMBER_PRESERVING_T_ONLY = "number_preserving_t_only"
 CIRCUIT_FAMILY_NUMBER_PRESERVING_T_TPRIME = "number_preserving_t_tprime"
 SUPPORTED_CIRCUIT_FAMILIES = (
     CIRCUIT_FAMILY_EXPLICIT_JW,
-    CIRCUIT_FAMILY_NUMBER_PRESERVING_T_ONLY,
     CIRCUIT_FAMILY_NUMBER_PRESERVING_T_TPRIME,
 )
+RETIRED_CIRCUIT_FAMILIES = (CIRCUIT_FAMILY_NUMBER_PRESERVING_T_ONLY,)
+READABLE_CIRCUIT_FAMILIES = SUPPORTED_CIRCUIT_FAMILIES + RETIRED_CIRCUIT_FAMILIES
+
+
+def require_active_circuit_family(circuit_family: str) -> None:
+    if circuit_family in RETIRED_CIRCUIT_FAMILIES:
+        raise ValueError(
+            f"Circuit family {circuit_family!r} is retired from new runs. "
+            "Existing jobs may still be retrieved; historical offline controls live in "
+            "historical.cuprate_t_only. Choose an active family and a new output directory "
+            "explicitly; no replacement circuit is selected automatically."
+        )
+    if circuit_family not in SUPPORTED_CIRCUIT_FAMILIES:
+        raise ValueError(f"Unsupported circuit_family {circuit_family!r}")
+
+
+def validate_circuit_family_action(
+    circuit_family: str, *, retrieve: bool = False, submit: bool = False,
+) -> None:
+    if retrieve:
+        if submit:
+            raise ValueError("--retrieve cannot be combined with --submit")
+        if circuit_family not in READABLE_CIRCUIT_FAMILIES:
+            raise ValueError(f"Unknown saved circuit_family {circuit_family!r}")
+    else:
+        require_active_circuit_family(circuit_family)
 
 
 def load_config(path: Path) -> Cuprate2DConfig:
@@ -165,8 +190,7 @@ def build_circuit(
     measured: bool,
     circuit_family: str = CIRCUIT_FAMILY_EXPLICIT_JW,
 ) -> tuple[QuantumCircuit, list[tuple[float, dict[int, str], str]]]:
-    if circuit_family not in SUPPORTED_CIRCUIT_FAMILIES:
-        raise ValueError(f"Unsupported circuit_family {circuit_family!r}")
+    require_active_circuit_family(circuit_family)
     terms = physical_2d_hubbard_terms(cfg)
     qc = QuantumCircuit(cfg.qubits)
     prepare_initial_state(qc, cfg)
@@ -181,6 +205,21 @@ def build_circuit(
     if measured:
         qc.measure_all()
     return qc, terms
+
+
+def ensure_output_circuit_family(outdir: Path, circuit_family: str) -> None:
+    """Do not relabel existing legacy results as a different circuit family."""
+    require_active_circuit_family(circuit_family)
+    for name in (
+        "cuprate_2d_qiskit_circuit_summary.json", "cuprate_2d_mps_summary.json",
+        "cuprate_2d_ibm_hardware_plan.json", "submitted_jobs.json",
+        "fire_opal_submitted_jobs.json", "fire_opal_plan.json", "best_layout.json",
+    ):
+        path = outdir / name
+        if path.exists():
+            previous = json.loads(path.read_text(encoding="utf-8"))
+            if not isinstance(previous, dict) or previous.get("circuit_family") != circuit_family:
+                raise ValueError(f"{path} belongs to another or unlabelled circuit family; choose a new --outdir")
 
 
 def two_qubit_depth(circuit: QuantumCircuit) -> int | None:
@@ -266,6 +305,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    ensure_output_circuit_family(args.outdir, args.circuit_family)
     cfg = load_config(args.config)
     validate_config(cfg)
     args.outdir.mkdir(parents=True, exist_ok=True)

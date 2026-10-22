@@ -26,6 +26,12 @@ same-observable comparisons for a staged 2D Hubbard route.
 
 ## Main Workflows
 
+**22 October 2026: the old `number_preserving_t_only` route is retired from
+new runs.** Its archived results and retrieval scripts remain available.
+The existing `explicit_jw` and `number_preserving_t_tprime` alternatives are
+unchanged; there is no automatic replacement model. See
+[retirement and verification details](docs/T_ONLY_RETIREMENT.md).
+
 Prepare the default 6x6 target:
 
 ```powershell

@@ -1,0 +1,488 @@
+{
+  "parent_commit": "45fd4daf096d6df7e46ef8e97389bf83c7e3e641",
+  "passed": true,
+  "new_qpu_seconds": 0,
+  "operator_checks": [
+    {
+      "kind": "builder",
+      "family": "explicit_jw",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 1,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "builder",
+      "family": "number_preserving_t_only",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 1,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "builder",
+      "family": "number_preserving_t_tprime",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 1,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "explicit_jw",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 1,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "onsite_only",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 1,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "number_preserving_t_tprime",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 1,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "builder",
+      "family": "explicit_jw",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "builder",
+      "family": "number_preserving_t_only",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "builder",
+      "family": "number_preserving_t_tprime",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "explicit_jw",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "onsite_only",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "number_preserving_t_tprime",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "builder",
+      "family": "explicit_jw",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 0,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "builder",
+      "family": "number_preserving_t_only",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 0,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "builder",
+      "family": "number_preserving_t_tprime",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 0,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "explicit_jw",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 0,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "onsite_only",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 0,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "number_preserving_t_tprime",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": -0.25,
+        "u_over_t": 0,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.1,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "builder",
+      "family": "explicit_jw",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": 0,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "builder",
+      "family": "number_preserving_t_only",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": 0,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "builder",
+      "family": "number_preserving_t_tprime",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": 0,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "explicit_jw",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": 0,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "onsite_only",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": 0,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    },
+    {
+      "kind": "scout",
+      "family": "number_preserving_t_tprime",
+      "config": {
+        "lx": 2,
+        "ly": 2,
+        "holes": 0,
+        "hopping_t": 1.0,
+        "t_prime_over_t": 0,
+        "u_over_t": 8,
+        "chemical_potential": 0.0,
+        "steps": 2,
+        "dt": 0.05,
+        "boundary_x": "open",
+        "boundary_y": "open",
+        "initial_state": "stripe_neel",
+        "shots": 20000
+      },
+      "max_difference": 0.0
+    }
+  ],
+  "scope": "Public historical snapshot; small-system regression only."
+}

@@ -36,15 +36,17 @@ from cuprate_2d_hubbard_pipeline import (
 )
 from cuprate_2d_ibm_hardware_runner import select_hardware_backend, site_observable_rows
 from cuprate_2d_layout_scout import backend_error_maps, score_candidate
-from cuprate_2d_qiskit_circuit import build_circuit, load_config, prepare_initial_state
+from cuprate_2d_qiskit_circuit import (
+    RETIRED_CIRCUIT_FAMILIES, build_circuit, load_config, prepare_initial_state,
+    require_active_circuit_family,
+)
 from ibm_staged_fermi_hubbard_runner import backend_name, backend_pending_jobs, build_runtime_service, summarize_circuit
 
 
 FAMILY_EXPLICIT_JW = "explicit_jw"
 FAMILY_ONSITE_ONLY = "onsite_only"
-FAMILY_T_ONLY = "number_preserving_t_only"
 FAMILY_T_TPRIME = "number_preserving_t_tprime"
-DEFAULT_FAMILIES = [FAMILY_EXPLICIT_JW, FAMILY_ONSITE_ONLY, FAMILY_T_ONLY, FAMILY_T_TPRIME]
+DEFAULT_FAMILIES = [FAMILY_EXPLICIT_JW, FAMILY_ONSITE_ONLY, FAMILY_T_TPRIME]
 
 
 def write_json(path: Path, payload: Any) -> None:
@@ -133,6 +135,8 @@ def add_number_preserving_hops(qc: QuantumCircuit, cfg: Cuprate2DConfig, *, incl
 
 
 def build_shallow_candidate(cfg: Cuprate2DConfig, family: str, *, measured: bool) -> tuple[QuantumCircuit, dict[str, Any]]:
+    if family in RETIRED_CIRCUIT_FAMILIES:
+        require_active_circuit_family(family)
     if family == FAMILY_EXPLICIT_JW:
         circuit, terms = build_circuit(cfg, measured=measured)
         return circuit, {
@@ -148,9 +152,7 @@ def build_shallow_candidate(cfg: Cuprate2DConfig, family: str, *, measured: bool
     hopping_layer_count = 0
     for _ in range(cfg.steps):
         add_onsite_terms(qc, cfg)
-        if family == FAMILY_T_ONLY:
-            hopping_layer_count += add_number_preserving_hops(qc, cfg, include_tprime=False)
-        elif family == FAMILY_T_TPRIME:
+        if family == FAMILY_T_TPRIME:
             hopping_layer_count += add_number_preserving_hops(qc, cfg, include_tprime=True)
         elif family != FAMILY_ONSITE_ONLY:
             raise ValueError(f"Unknown shallow circuit family: {family}")
@@ -336,11 +338,13 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    families = args.family or DEFAULT_FAMILIES
+    for family in families:
+        if family in RETIRED_CIRCUIT_FAMILIES:
+            require_active_circuit_family(family)
     cfg = load_config(args.config)
     validate_config(cfg)
     args.outdir.mkdir(parents=True, exist_ok=True)
-    families = args.family or DEFAULT_FAMILIES
-
     backend = None
     backend_payload: dict[str, Any] = {}
     readout_errors: dict[int, float] = {}

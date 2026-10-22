@@ -29,7 +29,9 @@ from cuprate_2d_hubbard_pipeline import (
     site_coord,
     validate_config,
 )
-from cuprate_2d_qiskit_circuit import SUPPORTED_CIRCUIT_FAMILIES, build_circuit, load_config
+from cuprate_2d_qiskit_circuit import (
+    SUPPORTED_CIRCUIT_FAMILIES, build_circuit, ensure_output_circuit_family, load_config,
+)
 
 
 Z = np.asarray([[1.0, 0.0], [0.0, -1.0]], dtype=complex)
@@ -334,10 +336,9 @@ def write_report(path: Path, summary: dict[str, Any]) -> None:
 
 
 def run(args: argparse.Namespace) -> Path:
+    ensure_output_circuit_family(args.outdir, args.circuit_family)
     cfg = replace(load_config(args.config), steps=int(args.steps))
     validate_config(cfg)
-    if args.circuit_family not in SUPPORTED_CIRCUIT_FAMILIES:
-        raise ValueError(f"Unsupported circuit_family: {args.circuit_family}")
     args.outdir.mkdir(parents=True, exist_ok=True)
 
     profiles = []
@@ -410,7 +411,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--outdir", type=Path, required=True)
     parser.add_argument("--steps", type=int, default=1)
-    parser.add_argument("--circuit-family", choices=SUPPORTED_CIRCUIT_FAMILIES, default="number_preserving_t_only")
+    parser.add_argument("--circuit-family", choices=SUPPORTED_CIRCUIT_FAMILIES, required=True,
+                        help="Choose the model explicitly; the old t-only default is retired.")
     parser.add_argument("--max-bonds", default="32,64")
     parser.add_argument("--cutoff", type=float, default=1e-10)
     return parser.parse_args()

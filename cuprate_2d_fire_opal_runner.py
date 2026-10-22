@@ -24,7 +24,10 @@ from cuprate_2d_ibm_hardware_runner import (
     write_csv,
     write_json,
 )
-from cuprate_2d_qiskit_circuit import SUPPORTED_CIRCUIT_FAMILIES, build_circuit, load_config
+from cuprate_2d_qiskit_circuit import (
+    READABLE_CIRCUIT_FAMILIES, SUPPORTED_CIRCUIT_FAMILIES, build_circuit,
+    ensure_output_circuit_family, load_config, require_active_circuit_family, validate_circuit_family_action,
+)
 from fire_opal_fermi_hubbard_runner import (
     export_qasm2,
     fire_opal_payload_to_raw_results,
@@ -245,6 +248,7 @@ def write_plan(
 
 
 def submit_fire_opal(stage_dir: Path, records: list[dict[str, Any]], args: argparse.Namespace) -> None:
+    require_active_circuit_family(args.circuit_family)
     print("Importing Fire Opal...", flush=True)
     import fireopal as fo
 
@@ -463,7 +467,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--steps", type=int, default=1)
     parser.add_argument("--shots", type=int, default=512)
     parser.add_argument("--readout-shots", type=int, default=512)
-    parser.add_argument("--circuit-family", choices=SUPPORTED_CIRCUIT_FAMILIES, default="explicit_jw")
+    parser.add_argument("--circuit-family", choices=READABLE_CIRCUIT_FAMILIES, default="explicit_jw",
+                        help="Retired t-only is accepted only with --retrieve; never for a new run.")
     parser.add_argument("--qasm-basis", default="qelib", choices=["qelib", "native"])
     parser.add_argument("--qasm-optimization-level", type=int, default=1)
     parser.add_argument(
@@ -481,11 +486,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--retrieve", action="store_true")
     parser.add_argument("--wait", action="store_true")
     parser.add_argument("--only-group", default=None)
-    return parser.parse_args()
+    args = parser.parse_args()
+    try:
+        validate_circuit_family_action(args.circuit_family, retrieve=args.retrieve, submit=args.submit)
+    except ValueError as error:
+        parser.error(str(error))
+    return args
 
 
 def main() -> None:
     args = parse_args()
+    validate_circuit_family_action(args.circuit_family, retrieve=args.retrieve, submit=args.submit)
+    if not args.retrieve:
+        ensure_output_circuit_family(args.outdir, args.circuit_family)
     if args.abstract_input:
         args.qasm_basis = "native"
         args.qasm_optimization_level = 0

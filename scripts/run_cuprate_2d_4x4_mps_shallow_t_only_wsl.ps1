@@ -1,16 +1,2 @@
-$ErrorActionPreference = "Stop"
-
-$RepoWin = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
-$RepoWinForWsl = $RepoWin -replace "\\", "/"
-$RepoWsl = (wsl.exe wslpath -a "$RepoWinForWsl").Trim()
-$Python = "/home/bram/.venvs/qiskit/bin/python"
-$RunDir = "results_cuprate_2d/validation_ladder_steps1/cuprate_4x4_holes2_steps1"
-$OutDir = "$RunDir/mps_shallow_t_only_steps1"
-
-wsl.exe --cd "$RepoWsl" "$Python" "cuprate_2d_mps_circuit_baseline.py" `
-  --config "$RunDir/cuprate_2d_config.json" `
-  --outdir "$OutDir" `
-  --steps 1 `
-  --circuit-family "number_preserving_t_only" `
-  --max-bonds "32,64" `
-  --cutoff 1e-10
+# Historical launcher retained only to give a clear retirement error.
+throw "The historical number_preserving_t_only route is retired. No circuit or job was created. Choose an active family explicitly in a generic 2D entry point with a new output directory. Existing results can still be retrieved. See docs/T_ONLY_RETIREMENT.md."
